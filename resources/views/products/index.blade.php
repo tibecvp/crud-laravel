@@ -6,6 +6,7 @@
 			Listado de productos
 			<a href="{{route('products.create')}}" class="btn btn-primary pull-right">Nuevo</a>
 		</h2>
+		@include('products.fragment.info')
 		<table  class="table table-hover table-striped">
 			<thead>
 				<tr>
@@ -23,12 +24,18 @@
 							{{$product->short}}
 						</td>
 						<td>
-							<a href="{{route('products.show', $product->id)}}">Ver</a>
+							<a href="{{route('products.show', $product->id)}}" class="btn btn-link">Ver</a>
 						</td>
 						<td>
-							<a href="{{route('products.edit', $product->id)}}">Editar</a>
+							<a href="{{route('products.edit', $product->id)}}" class="btn btn-link">Editar</a>
 						</td>
-						<td>Borrar</td>
+						<td>
+							<form action=" {{route('products.destroy', $product->id)}}" method="POST">
+								{{ csrf_field() }}
+								<input type="hidden" name="_method" value="DELETE">
+								<button class="btn btn-link">Borrar</button>
+							</form>
+						</td>
 					</tr>
 				@endforeach
 			</tbody>
@@ -36,6 +43,6 @@
 		{!! $products->render() !!}
 	</div>
 	<div class="col-sm-4">
-		mensaje
+		@include('products.fragment.aside')
 	</div>
 @endsection
